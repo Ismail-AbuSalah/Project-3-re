@@ -5,7 +5,7 @@ import ColorPicker from "./components/ColorPicker/ColorPicker";
 import GameTimer from "./components/GameTimer/GameTimer";
 import NewGameButton from "./components/NewGameButton/NewGameButton";
 
-const color = ["#7CCCE5", "#FDE47F", "#E0E47F", "#B576AD"];
+const colors = ["#7CCCE5", "#FDE47F", "#E0E47F", "#B576AD"];
 
 export default class App extends Component {
   constructor() {
@@ -15,30 +15,45 @@ export default class App extends Component {
     // Where the object has "state" properties
     this.state = {
       selColorIdx: 0,
-      guesses: [],
+      guesses: [this.getNewGuess(),this.getNewGuess()],
       code: this.genCode(),
+    };
+  }
+
+  getNewGuess() {
+    return {
+      // code: [null, null, null, null],
+      code: [3, 2, 1, 0],
+      score: {
+        perfect: 0,
+        almost: 0,
+      },
     };
   }
 
   genCode() {
     return new Array(4)
       .fill()
-      .map(() => Math.floor(Math.random() * color.length));
+      .map(() => Math.floor(Math.random() * colors.length));
   }
 
   render() {
     return (
       <div className="App">
-        <div>selected color : {color[this.state.selColorIdx]}</div>
-        <button onClick={()=>{
-          this.setState({ selColorIdx: ++this.state.selColorIdx % 4});
-          console.log(this.state.selColorIdx);
-          }}>NextColor</button>
+        <div>selected color : {colors[this.state.selColorIdx]}</div>
+        <button
+          onClick={() => {
+            this.setState({ selColorIdx: ++this.state.selColorIdx % 4 });
+            console.log(this.state.selColorIdx);
+          }}
+        >
+          NextColor
+        </button>
         <header className="App-header">React MasterMind</header>
         <div className="flex-h">
-          <GameBoard />
+          <GameBoard colors={colors} guesses={this.state.guesses} />
           <div>
-            <ColorPicker />
+            <ColorPicker colors={colors} selColorIdx={this.state.selColorIdx} />
             <GameTimer />
             <NewGameButton />
           </div>

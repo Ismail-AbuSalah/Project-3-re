@@ -22,3 +22,7 @@ code {
   display: flex;
   justify-content: center;
 }
+
+.flex-rev-vertical{
+  flex-direction: column-reverse;
+}
