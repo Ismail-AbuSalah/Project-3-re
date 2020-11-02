@@ -7,7 +7,7 @@ const GuessRow = (props) => (
   <div className="component flex-h">
     <div>{props.rowIdx + 1}</div>
     GuessRow
-    <GuessPegs colors={props.colors} code={props.guess.code} />
+    <GuessPegs colors={props.colors} code={props.guess.code} currentguess={props.currentguess}/>
     {props.currentguess ? <ScoreButton /> : <GuessScore />}
   </div>
 );
